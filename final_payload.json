@@ -1,0 +1,43 @@
+{
+    "body-json": {
+        "user_id": 571,
+        "account_id": 3,
+        "fields": [
+            "orgno",
+            "company_name"
+        ],
+        "from": 0,
+        "size": 10,
+        "filters": {
+            "revenue": {
+                "from": "5",
+                "currency": "mEUR"
+            },
+            "country_code": [
+                "FI",
+                "SE"
+            ],
+            "industry": [
+                "SNIR93191"
+            ],
+            "employees": {
+                "to": "30"
+            }
+        }
+    },
+    "params": {
+        "path": {},
+        "querystring": {},
+        "header": {
+            "goava-env": "production",
+            "Host": "hekd0k0m85.execute-api.eu-west-1.amazonaws.com",
+            "X-Forwarded-For": "114.134.91.102",
+            "X-Forwarded-Proto": "https"
+        }
+    },
+    "context": {
+        "http-method": "POST",
+        "resource-path": "/prospector-list",
+        "lambda-env": "prod"
+    }
+}

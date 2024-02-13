@@ -1,0 +1,130 @@
+We want to build a filter for companies, on some dimensions like Country, Industry, Revenue and Employees from user input. 
+If the input text contains a certain dimension then it should be added in the filter object and if not then it should not be added in the filter object.
+
+Filter on country dimension supports only the countries Sweden ("SE"), Norway ("NO"), Denmark ("DK") and Finland ("FI").
+Example 1: If the user input asks about swedish companies the filter will be
+{
+	"filters": {
+		"country_code":[
+			"SE"
+		]
+	}
+
+}
+
+
+If the user input contains industry then we should add NACE codes for those industries in the filter. 
+NACE codes in the filter should be of the following format SNI<BroadSector><SubSector>. For example: SNIB07100, 
+here B is the BroadSector and 07100 is the SubSector. Both broad sector and sub sectors are required.
+SubSector should always be of 5 characters. If they are of less than 5 characters fill them with padding X. 
+For example: SNIB07100, SNIB089XX. 
+Now for example if the user input asks about Information and Communication (SNIJXXXXX), Mining and Iron Ores (SNIB07100) then the filter object will be
+{
+	"filters": {
+		"industry": [
+            "SNIJXXXXX",
+            "SNIB07100"
+        ]
+	}
+
+}
+Please try to provide the NACE codes as much specific as possible also it should have BoradSector like A,B,C,D,E and so on and SubSector.
+
+
+Revenue dimension can be of four currencies and in two units: kEUR, mEUR, kNOK, mNOK, kSEK, mSEK, kDKK, mDKK
+k means Thousand and m means Million. EUR means Euro, SEK means Swedish Kronor, NOK means Norwegian Kroner and DKK
+means Danish Kroner.
+
+Example 1: Revenue between 465.599 kNOK to 134217728 kNOK
+{
+	"filters": {
+	    "revenue": {
+	        "from": "465.599",
+	        "to": "134217728",
+	        "currency": "kNOK"
+	    }
+	}	
+}
+
+Example 2: Revenue more than 1000 kDKK
+{
+	"filters": {
+	    "revenue": {
+	        "from": "1000"
+	        "currency": "kDKK"
+	    }
+	}	
+}
+
+Employees dimension name is employees. It has from and to attributes same as revenue dimension.
+
+Example 1: Employees less than 50
+{
+	"filters": {
+	    "employees": {
+	        "to": "50"
+	    }
+	}	
+}
+
+More examples are given below:
+Q: Give me all swedish information and communication related companies that have revenue more than 5 kEuro.
+A: {
+	"filters": {
+	    "revenue": {
+	        "from": "5"
+	        "currency": "kEUR"
+	    },
+	    "industry": [
+	    	"SNIJXXXXX"
+	    ],
+	    "country_code":[
+			"SE"
+		]
+	}	
+}
+
+Q: Give me all finnish finance related companies that have revenue between 1000 k Euro to 5000 thousands euro.
+A: {
+	"filters": {
+	    "revenue": {
+	        "from": "1000",
+	        "to": "5000",
+	        "currency": "kEUR"
+	    },
+	    "industry": [
+	    	"SNIKXXXXX"
+	    ],
+	    "country_code":[
+			"FI"
+		]
+	}	
+}
+
+Q: Give me all swedish wholesale and retail companies.
+A: {
+	"filters": {
+	    "industry": [
+	    	"SNIGXXXXX"
+	    ],
+	    "country_code":[
+			"SE"
+		]
+	}	
+}
+
+Q: Give me companies that deal with Horse Racing and have revenue between 1M to 100M euro.
+A: {
+	"filters": {
+		"revenue": {
+			"from": "1",
+			"to": "100",
+			"currency": "mEUR"
+		},
+		"industry": [
+			"SNIR93191"
+		]
+	}
+}
+
+Now return only the json object (not more than that) for the following question (don't forget to add broad sector):

@@ -1,0 +1,4 @@
+openai==0.27.7
+loguru==0.5.3
+boto3==1.11.12
+botocore==1.14.12
